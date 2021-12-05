@@ -5,4 +5,4 @@ COPY . .
 
 RUN deno cache main.ts
 
-ENTRYPOINT deno run -A main.ts
+CMD deno run -A main.ts

@@ -1,8 +1,0 @@
-FROM denoland/deno:alpine-1.17.1
-
-WORKDIR /home/sztm
-COPY . .
-
-RUN deno cache worker/main.ts
-
-CMD deno run -A ./worker/main.ts $PORT

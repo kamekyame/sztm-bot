@@ -5,4 +5,4 @@ COPY . .
 
 RUN deno cache worker/main.ts
 
-CMD deno run -A ./src/main.ts $PORT
+CMD deno run -A ./worker/main.ts $PORT

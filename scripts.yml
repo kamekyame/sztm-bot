@@ -1,0 +1,5 @@
+scripts:
+  start:
+    cmd: "deno run src/main.ts"
+    desc: "run server"
+    allow: "all"

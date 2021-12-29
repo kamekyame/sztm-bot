@@ -1,5 +1,8 @@
 import { Application } from "./deps.ts";
 
+// start cron job
+import "./cron.ts";
+
 import { logger, responseTypeHeader } from "./middleware.ts";
 
 // Read Arguments

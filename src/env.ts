@@ -22,7 +22,7 @@ function getConfigStr() {
 
 // Read dotenv file
 config({
-  path: resolve("../../.env").href,
+  path: ".env",
   export: true,
   //defaults: resolve("../../.env.default"),
 });

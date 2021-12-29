@@ -1,12 +1,58 @@
-import { statusUpdate} from "../deps.ts";
+import { datetime, statusUpdate } from "../deps.ts";
 import { auth } from "../twitter_util.ts";
 
-if (import.meta.main) roboconInfoTweet();
+import roboconInfo from "../../data/robocon_info.json" assert { type: "json" };
+
+const YEAR = "2021";
+
+const keyToName: Record<string, string> = {
+  "hokkaido": "北海道地区",
+  "tohoku": "東北地区",
+  "kinki": "近畿地区",
+  "tokaiHokuriku": "東海北陸地区",
+  "kantoKoshinetsu": "関東甲信越地区",
+  "cyugoku": "中国地区",
+  "sikoku": "四国地区",
+  "kyusyuOkinawa": "九州沖縄地区",
+  "zenkoku": "全国",
+};
+
+// 海外サーバだとTimeZoneが変わってきて差がずれるので、日本時間と同じ日時でUTCにする関数
+// 例：2020-01-01T07:00:00+09:00 -> 2020-01-01T07:00:00+00:00
+const translateDate = (() => {
+  const timeZoneDiffMinutes = new Date().getTimezoneOffset() + 60 * 9;
+  const timeZoneDiffMilliseconds = timeZoneDiffMinutes * 60 * 1000;
+  console.log(timeZoneDiffMinutes);
+
+  return (...date: ConstructorParameters<typeof Date>) => {
+    return new Date(new Date(...date).getTime() + timeZoneDiffMilliseconds);
+  };
+})();
+
+const getDayDiff = (from: Date, to: Date) => {
+  from.setHours(0, 0, 0, 0);
+  to.setHours(0, 0, 0, 0);
+  const diffTime = to.getTime() - from.getTime();
+  return Math.floor(diffTime / datetime.DAY);
+};
 
 export async function roboconInfoTweet() {
-  const res = await statusUpdate(auth, {
-    status: "hello world!"+ new Date(),
+  const { name, date } = roboconInfo[YEAR];
+  const nowDate = translateDate(new Date());
+
+  let status = `ロボコン${YEAR}「${name}」\n\n`;
+  Object.entries(date).forEach(([key, value]) => {
+    const tournamentName = keyToName[key];
+    if (tournamentName === "全国") status += "\n";
+    const diff = getDayDiff(nowDate, new Date(value));
+    status += `${tournamentName}大会まで ${diff}日\n`;
   });
-  
+
+  status += "\n#ロボコン";
+  //console.log(status);
+
+  const res = await statusUpdate(auth, { status });
   console.log(res);
-} 
+}
+
+if (import.meta.main) roboconInfoTweet();

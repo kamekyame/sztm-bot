@@ -11,7 +11,7 @@ export const mydnsUpdateDNS = (() => {
   } else {
     const auth: BasicAuthInfo = { username, password };
     return () => {
-      ["ipv4", "ipv6"].forEach(async (type) => {
+      ["ipv4" /*, "ipv6"*/].forEach(async (type) => {
         const res = await baFetch(`https://${type}.mydns.jp/login.html`, auth);
         // console.log(res);
         if (res.status === 200) {

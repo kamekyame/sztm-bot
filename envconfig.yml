@@ -9,3 +9,8 @@ TOKEN:
   require: true
 TOKEN_SECRET:
   require: true
+
+MYDNS_MASTER_ID:
+  require: false
+MYDNS_PASSWORD:
+  require: false

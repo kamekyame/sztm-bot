@@ -1,6 +1,8 @@
 port: # サーバのポート
   require: false
   default: 8880
+
+# Twitter用のAPI KEY
 API_KEY:
   require: true
 API_SECRET:
@@ -9,8 +11,3 @@ TOKEN:
   require: true
 TOKEN_SECRET:
   require: true
-
-MYDNS_MASTER_ID:
-  require: false
-MYDNS_PASSWORD:
-  require: false

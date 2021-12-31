@@ -1,5 +1,5 @@
-import { datetime, statusUpdate } from "../deps.ts";
-import { translateDate } from "../util.ts";
+import { statusUpdate } from "../deps.ts";
+import { getDayDiff, translateDate } from "../util.ts";
 import { auth } from "../twitter_util.ts";
 
 import roboconInfo from "../../data/robocon_info.json" assert { type: "json" };
@@ -16,13 +16,6 @@ const keyToName: Record<string, string> = {
   "sikoku": "四国地区",
   "kyusyuOkinawa": "九州沖縄地区",
   "zenkoku": "全国",
-};
-
-const getDayDiff = (from: Date, to: Date) => {
-  from.setHours(0, 0, 0, 0);
-  to.setHours(0, 0, 0, 0);
-  const diffTime = to.getTime() - from.getTime();
-  return Math.floor(diffTime / datetime.DAY);
 };
 
 export async function roboconInfoTweet() {

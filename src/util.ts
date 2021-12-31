@@ -13,3 +13,10 @@ export const translateDate = (() => {
     return new Date(new Date(...date).getTime() + timeZoneDiffMilliseconds);
   };
 })();
+
+export const getDayDiff = (from: Date, to: Date) => {
+  from.setHours(0, 0, 0, 0);
+  to.setHours(0, 0, 0, 0);
+  const diffTime = to.getTime() - from.getTime();
+  return Math.floor(diffTime / datetime.DAY);
+};

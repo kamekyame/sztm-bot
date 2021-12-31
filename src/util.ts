@@ -15,8 +15,8 @@ export const translateDate = (() => {
 })();
 
 export const getDayDiff = (from: Date, to: Date) => {
-  from.setHours(0, 0, 0, 0);
-  to.setHours(0, 0, 0, 0);
+  from.setUTCHours(0, 0, 0, 0);
+  to.setUTCHours(0, 0, 0, 0);
   const diffTime = to.getTime() - from.getTime();
   return Math.floor(diffTime / datetime.DAY);
 };

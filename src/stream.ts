@@ -37,13 +37,13 @@ const option: StreamParam = {
 };
 //console.log("option", option);
 
-await connectStream(
+connectStream(
   bearerToken,
   (res) => {
     //console.log(res);
     fortune.callback(res);
   },
   option,
-);
-
-Deno.exit(1);
+).then(() => {
+  Deno.exit(1);
+});

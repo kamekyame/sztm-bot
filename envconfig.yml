@@ -11,3 +11,7 @@ TOKEN:
   require: true
 TOKEN_SECRET:
   require: true
+
+# dyno metadata()
+HEROKU_RELEASE_VERSION:
+  require: true

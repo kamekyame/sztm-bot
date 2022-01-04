@@ -1,4 +1,4 @@
-import { Application, Router, Status } from "./deps.ts";
+import { Application, oakCors, Router, Status } from "./deps.ts";
 import { reqEnv } from "./env.ts";
 import { logger, responseTypeHeader } from "./api/middleware.ts";
 
@@ -13,6 +13,7 @@ const app = new Application();
 
 app.use(logger);
 app.use(responseTypeHeader);
+app.use(oakCors());
 
 app.use(router.routes());
 app.use((ctx) => {

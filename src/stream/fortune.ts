@@ -25,7 +25,6 @@ export class Fortune implements IStream {
   }
 
   async callback(res: StreamTweet) {
-    if (!res.matching_rules.some((e) => e.tag === this.tag)) return;
     if (res.data.text.indexOf("占い") === -1) return;
     //console.log(res);
     let user;

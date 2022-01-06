@@ -52,9 +52,13 @@ console.log("option", option);
 connectStream(
   bearerToken,
   (res) => {
+    console.log(`[stream] Tweet received: ${res.data.id}`);
     //console.log(res);
     for (const bot of bots) {
-      bot.callback(res);
+      const rule = bot.getRule();
+      if (res.matching_rules.some((e) => e.tag === rule.tag)) {
+        bot.callback(res);
+      }
     }
   },
   option

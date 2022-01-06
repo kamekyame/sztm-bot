@@ -40,8 +40,6 @@ export class T7sResume implements IStream {
   }
 
   public async callback(res: StreamTweet) {
-    if (!res.matching_rules.some((e) => e.tag === this.tag)) return;
-
     // firestoreに保存
     await setResumeTweet(res);
 

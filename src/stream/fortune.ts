@@ -1,7 +1,8 @@
 import { statusUpdate, StreamTweet } from "../deps.ts";
 import { auth } from "../twitter_util.ts";
+import { type IStream } from "../stream.ts";
 
-export class Fortune {
+export class Fortune implements IStream {
   private readonly receiveUsername;
 
   private readonly tag = "fortuneBOT";
@@ -12,11 +13,7 @@ export class Fortune {
     expansions: { author_id: true },
   };
 
-  constructor(
-    { receiveUsername }: {
-      receiveUsername: string;
-    },
-  ) {
+  constructor({ receiveUsername }: { receiveUsername: string }) {
     this.receiveUsername = receiveUsername;
   }
 

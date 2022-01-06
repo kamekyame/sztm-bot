@@ -1,8 +1,9 @@
 import { statusRetweet, StreamParam, StreamTweet } from "../deps.ts";
 import { auth } from "../twitter_util.ts";
+import { type IStream } from "../stream.ts";
 import { setResumeTweet } from "../firebase/t7s-resume.ts";
 
-export class T7sResume {
+export class T7sResume implements IStream {
   private searchTexts = [
     "#支配人履歴書",
     "#ナナシス履歴書",

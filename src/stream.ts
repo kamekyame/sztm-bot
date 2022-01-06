@@ -1,14 +1,25 @@
-import { changeRules, connectStream, getRules, StreamParam } from "./deps.ts";
+import {
+  changeRules,
+  connectStream,
+  getRules,
+  StreamParam,
+  StreamTweet,
+} from "./deps.ts";
 import { bearerToken } from "./twitter_util.ts";
 
 import { Fortune } from "./stream/fortune.ts";
 import { T7sResume } from "./stream/t7s-resume.ts";
 
+export interface IStream {
+  readonly option: StreamParam;
+  getRule: () => { value: string; tag: string };
+  callback: (res: StreamTweet) => Promise<void>;
+}
+
 //const receiveUsername = "botTest46558316";
 const receiveUsername = "SuzuTomo2001";
 
-const fortune = new Fortune({ receiveUsername });
-const t7sResume = new T7sResume();
+const bots: IStream[] = [new Fortune({ receiveUsername }), new T7sResume()];
 
 /*await changeRules(bearerToken, {
   delete: { ids: ["1406961011857395713"] },
@@ -16,7 +27,7 @@ const t7sResume = new T7sResume();
 
 // Check rule
 async function checkRule() {
-  const needRules = [fortune.getRule(), t7sResume.getRule()];
+  const needRules = bots.map((bot) => bot.getRule());
 
   let rules = await getRules(bearerToken);
   const addRules = needRules.filter(
@@ -32,18 +43,19 @@ async function checkRule() {
 }
 await checkRule();
 
-const option: StreamParam = {
-  ...fortune.option,
-  ...t7sResume.option,
-};
-//console.log("option", option);
+let option: StreamParam = {};
+for (const bot of bots) {
+  option = { ...option, ...bot.option };
+}
+console.log("option", option);
 
 connectStream(
   bearerToken,
   (res) => {
     //console.log(res);
-    fortune.callback(res);
-    t7sResume.callback(res);
+    for (const bot of bots) {
+      bot.callback(res);
+    }
   },
   option
 ).then(() => {

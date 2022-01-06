@@ -12,6 +12,12 @@ TOKEN:
 TOKEN_SECRET:
   require: true
 
+# firebase
+FIREBASE_EMAIL:
+  require: true
+FIREBASE_PASSWORD:
+  require: true
+
 # dyno metadata()
 HEROKU_RELEASE_VERSION:
   require: true

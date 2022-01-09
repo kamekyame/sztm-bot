@@ -9,6 +9,7 @@ import { bearerToken } from "./twitter_util.ts";
 
 import { Fortune } from "./stream/fortune.ts";
 import { T7sResume } from "./stream/t7s-resume.ts";
+import { MajiUranaiCollect } from "./stream/maji-uranai-collect.ts";
 
 export interface IStream {
   readonly option: StreamParam;
@@ -16,14 +17,20 @@ export interface IStream {
   callback: (res: StreamTweet) => Promise<void>;
 }
 
-//const receiveUsername = "botTest46558316";
+// const receiveUsername = "botTest46558316";
 const receiveUsername = "SuzuTomo2001";
 
-const bots: IStream[] = [new Fortune({ receiveUsername }), new T7sResume()];
+const bots: IStream[] = [
+  new Fortune({ receiveUsername }),
+  new T7sResume(),
+  new MajiUranaiCollect({
+    /*receiveUsername*/
+  }),
+];
 
-/*await changeRules(bearerToken, {
-  delete: { ids: ["1406961011857395713"] },
-});*/
+// await changeRules(bearerToken, {
+//   delete: { ids: ["1406961011857395713"] },
+// });
 
 // Check rule
 async function checkRule() {

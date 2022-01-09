@@ -6,6 +6,8 @@ import {
 
 type Data = { value: string; badValue: string; date: string }[];
 
+throw Error("data already upload");
+
 const colors = JSON.parse(
   await Deno.readTextFile("old/maji-uranai-collect/colors.json")
 );

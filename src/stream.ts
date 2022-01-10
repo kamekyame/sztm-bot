@@ -64,11 +64,13 @@ connectStream(
     for (const bot of bots) {
       const rule = bot.getRule();
       if (res.matching_rules.some((e) => e.tag === rule.tag)) {
+        console.log(`[stream] Matching rule: ${rule.tag}`);
         bot.callback(res);
       }
     }
   },
   option
 ).then(() => {
+  console.error("[stream] Connection closed.");
   Deno.exit(1);
 });

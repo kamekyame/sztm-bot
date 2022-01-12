@@ -40,10 +40,22 @@ async function checkRule() {
   const addRules = needRules.filter(
     (needRule) => !rules.data?.some((rule) => rule.value === needRule.value)
   );
+  const delRules = (rules.data || []).filter((rule) => {
+    return needRules.some(
+      (needRule) => needRule.tag === rule.tag && needRule.value !== rule.value
+    );
+  });
+  console.log({ addRules, delRules });
   if (addRules.length > 0) {
-    console.log("addRules", addRules);
     const aRules = await changeRules(bearerToken, { add: addRules });
     console.log(aRules);
+  }
+  if (delRules.length > 0) {
+    const delRulesId = delRules.map((rule) => rule.id);
+    const dRules = await changeRules(bearerToken, {
+      delete: { ids: delRulesId },
+    });
+    console.log(dRules);
   }
   rules = await getRules(bearerToken);
   console.log("Rules", rules.data);

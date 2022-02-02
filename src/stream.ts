@@ -10,6 +10,7 @@ import { bearerToken } from "./twitter_util.ts";
 import { Fortune } from "./stream/fortune.ts";
 import { T7sResume } from "./stream/t7s-resume.ts";
 import { MajiUranaiCollect } from "./stream/maji-uranai-collect.ts";
+import { Test } from "./stream/stream-test.ts";
 
 export interface IStream {
   readonly option: StreamParam;
@@ -26,6 +27,7 @@ const bots: IStream[] = [
   new MajiUranaiCollect({
     /*receiveUsername*/
   }),
+  new Test(),
 ];
 
 // await changeRules(bearerToken, {

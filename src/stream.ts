@@ -70,7 +70,7 @@ for (const bot of bots) {
 }
 console.log("option", option);
 
-connectStream(
+await connectStream(
   bearerToken,
   (res) => {
     console.log(`[stream] Tweet received: ${res.data.id}`);
@@ -84,7 +84,7 @@ connectStream(
     }
   },
   option
-).finally(() => {
+); /*.finally(() => {
   console.error("[stream] Connection closed .");
   Deno.exit(1);
-});
+});*/

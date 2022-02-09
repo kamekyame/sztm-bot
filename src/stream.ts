@@ -84,7 +84,7 @@ connectStream(
     }
   },
   option
-).then(() => {
-  console.error("[stream] Connection closed.");
+).finally(() => {
+  console.error("[stream] Connection closed .");
   Deno.exit(1);
 });

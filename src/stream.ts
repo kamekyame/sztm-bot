@@ -70,21 +70,53 @@ for (const bot of bots) {
 }
 console.log("option", option);
 
-await connectStream(
-  bearerToken,
-  (res) => {
-    console.log(`[stream] Tweet received: ${res.data.id}`);
-    //console.log(res);
-    for (const bot of bots) {
-      const rule = bot.getRule();
-      if (res.matching_rules.some((e) => e.tag === rule.tag)) {
-        console.log(`[stream] Matching rule: ${rule.tag}`);
-        bot.callback(res);
-      }
+// connectStream(
+//   bearerToken,
+//   (res) => {
+//     console.log(`[stream] Tweet received: ${res.data.id}`);
+//     //console.log(res);
+//     for (const bot of bots) {
+//       const rule = bot.getRule();
+//       if (res.matching_rules.some((e) => e.tag === rule.tag)) {
+//         console.log(`[stream] Matching rule: ${rule.tag}`);
+//         bot.callback(res);
+//       }
+//     }
+//   },
+//   option
+// ).finally(() => {
+//   console.error("[stream] Connection closed .");
+//   Deno.exit(1);
+// });
+
+const res = await fetch("https://api.twitter.com/2/tweets/search/stream", {
+  headers: new Headers({
+    Authorization: `Bearer ${bearerToken}`,
+  }),
+});
+console.log(res);
+if (res.body) {
+  for await (const a of res.body) {
+    try {
+      const data = new TextDecoder().decode(a);
+      if (data === "\r\n") continue;
+      const json = JSON.parse(data);
+      console.log(json);
+      // if (json.errors) {
+      //   json.errors.forEach((e) => {
+      //     console.log("Error", e);
+      //   });
+      //   reconnect("Receive Error.", 10);
+      //   return;
+      // } else {
+      //   //console.log(JSON.parse(data));
+
+      //   setTimeout(() => callback(json as StreamTweet), 0);
+      // }
+    } catch (e) {
+      if (e instanceof SyntaxError) continue;
+      console.log(e);
+      // return;
     }
-  },
-  option
-); /*.finally(() => {
-  console.error("[stream] Connection closed .");
-  Deno.exit(1);
-});*/
+  }
+}

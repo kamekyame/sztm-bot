@@ -17,8 +17,8 @@ export interface IStream {
   callback: (res: StreamTweet) => Promise<void>;
 }
 
-const receiveUsername = "botTest46558316";
-// const receiveUsername = "SuzuTomo2001";
+// const receiveUsername = "botTest46558316";
+const receiveUsername = "SuzuTomo2001";
 
 const bots: IStream[] = [
   new Fortune({ receiveUsername }),
@@ -82,7 +82,7 @@ connectStream(
     }
   },
   option
-).then(() => {
+).finally(() => {
   console.error("[stream] Connection closed.");
   Deno.exit(1);
 });

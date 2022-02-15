@@ -2,11 +2,14 @@ import { Application, oakCors, Router, Status } from "./deps.ts";
 import { reqEnv } from "./env.ts";
 import { logger, responseTypeHeader } from "./api/middleware.ts";
 
+import { majiUranai } from "./api/maji-uranai.ts";
+
 const router = new Router();
 router.get("/version", (ctx) => {
   ctx.response.status = Status.OK;
   ctx.response.body = reqEnv.HEROKU_RELEASE_VERSION;
 });
+router.use("/maji-uranai", majiUranai.routes(), majiUranai.allowedMethods());
 
 // Oak application
 const app = new Application();

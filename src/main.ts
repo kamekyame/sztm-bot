@@ -17,7 +17,3 @@ Deno.addSignalListener("SIGTERM", () => {
   }
   console.log("[main] SIGTERM received.");
 });
-
-Deno.addSignalListener("SIGKILL", () => {
-  console.log("[main] SIGKILL received.");
-});

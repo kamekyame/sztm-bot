@@ -70,21 +70,26 @@ for (const bot of bots) {
 }
 console.log("option", option);
 
-connectStream(
-  bearerToken,
-  (res) => {
-    console.log(`[stream] Tweet received: ${res.data.id}`);
-    //console.log(res);
-    for (const bot of bots) {
-      const rule = bot.getRule();
-      if (res.matching_rules.some((e) => e.tag === rule.tag)) {
-        console.log(`[stream] Matching rule: ${rule.tag}`);
-        bot.callback(res);
+export const stream = () => {
+  const ac = new AbortController();
+  connectStream(
+    bearerToken,
+    (res) => {
+      console.log(`[stream] Tweet received: ${res.data.id}`);
+      //console.log(res);
+      for (const bot of bots) {
+        const rule = bot.getRule();
+        if (res.matching_rules.some((e) => e.tag === rule.tag)) {
+          console.log(`[stream] Matching rule: ${rule.tag}`);
+          bot.callback(res);
+        }
       }
-    }
-  },
-  option
-).finally(() => {
-  console.error("[stream] Connection closed.");
-  Deno.exit(1);
-});
+    },
+    option,
+    ac
+  ).finally(() => {
+    console.error("[stream] Connection closed.");
+    // Deno.exit(1);
+  });
+  return ac;
+};

@@ -25,7 +25,13 @@ app.use((ctx) => {
 });
 // Read Arguments
 const port = parseInt(Deno.args[0]) || 8888;
-app.listen({ port }).then(() => {
-  Deno.exit(1);
-});
-console.log(`Listen to http://localhost:${port}/`);
+
+export const api = () => {
+  const ac = new AbortController();
+  console.log(`Listen to http://localhost:${port}/`);
+  app.listen({ port, signal: ac.signal }).finally(() => {
+    console.error("[api] Stopped API server.");
+    // Deno.exit(1);
+  });
+  return ac;
+};

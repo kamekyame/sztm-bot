@@ -7,7 +7,7 @@ export class Fortune implements IStream {
 
   private readonly tag = "fortuneBOT";
   private readonly value = () =>
-    `@${this.receiveUsername} 占い -from:${this.receiveUsername}`;
+    `@${this.receiveUsername} 占い -from:${this.receiveUsername} -is:retweet`;
 
   public readonly option = {
     expansions: { author_id: true },

@@ -1,4 +1,6 @@
-import { type CronOptions, datetime } from "./deps.ts";
+import { Cron, datetime } from "./deps.ts";
+
+type CronOptions = ConstructorParameters<typeof Cron>[1];
 
 export const cronOptions: CronOptions = { timezone: "Asia/Tokyo" };
 

@@ -87,6 +87,7 @@ export class T7sCard implements IStream {
 if (import.meta.main) {
   setTimeout(() => {
     const card = new T7sCard();
+    // deno-lint-ignore no-explicit-any
     card.callback(c as any);
   }, 1000);
 }

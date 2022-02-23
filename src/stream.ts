@@ -9,6 +9,7 @@ import { bearerToken } from "./twitter_util.ts";
 
 import { Fortune } from "./stream/fortune.ts";
 import { T7sResume } from "./stream/t7s-resume.ts";
+import { T7sCard } from "./stream/t7s-card.ts";
 import { MajiUranaiCollect } from "./stream/maji-uranai-collect.ts";
 import { Janken } from "./stream/janken.ts";
 
@@ -24,6 +25,7 @@ const receiveUsername = "SuzuTomo2001";
 const bots: IStream[] = [
   new Fortune({ receiveUsername }),
   new T7sResume(),
+  new T7sCard(),
   new MajiUranaiCollect({
     /*receiveUsername*/
   }),
@@ -64,9 +66,23 @@ async function checkRule() {
 }
 await checkRule();
 
-let option: StreamParam = {};
+// deno-lint-ignore no-explicit-any
+function concatObject(origin: any, newArray: any) {
+  Object.entries(newArray).forEach(([key, value]) => {
+    if (typeof value === "object") {
+      if (origin[key] === undefined) {
+        origin[key] = {};
+      }
+      concatObject(origin[key], value);
+    } else {
+      origin[key] = value;
+    }
+  });
+}
+
+const option: StreamParam = {};
 for (const bot of bots) {
-  option = { ...option, ...bot.option };
+  concatObject(option, bot.option);
 }
 console.log("option", option);
 

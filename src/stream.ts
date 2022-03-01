@@ -87,8 +87,7 @@ for (const bot of bots) {
 console.log("option", option);
 
 export const stream = () => {
-  const ac = new AbortController();
-  connectStream(
+  return connectStream(
     bearerToken,
     (res) => {
       console.log(`[stream] Tweet received: ${res.data.id}`);
@@ -101,11 +100,11 @@ export const stream = () => {
         }
       }
     },
-    option,
-    ac
-  ).finally(() => {
-    console.error("[stream] Connection closed.");
-    // Deno.exit(1);
-  });
-  return ac;
+    option
+  );
+  // .finally(() => {
+  // console.error("[stream] Connection closed.");
+  // Deno.exit(1);
+  // });
+  // return ac;
 };

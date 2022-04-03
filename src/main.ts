@@ -8,10 +8,11 @@ import { stream } from "./stream.ts";
 import { api } from "./api.ts";
 
 const acs: AbortController[] = [];
-acs.push(stream());
+const disconnectStream = stream();
 acs.push(api());
 
 Deno.addSignalListener("SIGTERM", () => {
+  disconnectStream();
   for (const ac of acs) {
     ac.abort();
   }

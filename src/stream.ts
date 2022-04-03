@@ -102,9 +102,4 @@ export const stream = () => {
     },
     option
   );
-  // .finally(() => {
-  // console.error("[stream] Connection closed.");
-  // Deno.exit(1);
-  // });
-  // return ac;
 };

@@ -4,18 +4,18 @@ import { auth } from "../twitter_util.ts";
 
 import roboconInfo from "../../data/robocon_info.json" assert { type: "json" };
 
-const YEAR = "2021";
+const YEAR = "2022";
 
 const keyToName: Record<string, string> = {
-  "hokkaido": "北海道地区",
-  "tohoku": "東北地区",
-  "kinki": "近畿地区",
-  "tokaiHokuriku": "東海北陸地区",
-  "kantoKoshinetsu": "関東甲信越地区",
-  "cyugoku": "中国地区",
-  "sikoku": "四国地区",
-  "kyusyuOkinawa": "九州沖縄地区",
-  "zenkoku": "全国",
+  hokkaido: "北海道地区",
+  tohoku: "東北地区",
+  kinki: "近畿地区",
+  tokaiHokuriku: "東海北陸地区",
+  kantoKoshinetsu: "関東甲信越地区",
+  cyugoku: "中国地区",
+  sikoku: "四国地区",
+  kyusyuOkinawa: "九州沖縄地区",
+  zenkoku: "全国",
 };
 
 export async function roboconInfoTweet() {

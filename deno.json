@@ -1,0 +1,6 @@
+{
+  "tasks": {
+    "cache": "deno cache src/main.ts",
+    "run": "deno run -A src/main.ts"
+  }
+}

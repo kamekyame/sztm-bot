@@ -24,7 +24,7 @@ app.use((ctx) => {
   ctx.response.body = { message: "Not Found" };
 });
 // Read Arguments
-const port = parseInt(Deno.args[0]) || 8888;
+const port = parseInt(reqEnv.PORT);
 
 export const api = () => {
   const ac = new AbortController();

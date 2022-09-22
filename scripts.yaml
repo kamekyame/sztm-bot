@@ -1,2 +1,0 @@
-scripts:
-  start: deno run -A --no-check=remote --unstable

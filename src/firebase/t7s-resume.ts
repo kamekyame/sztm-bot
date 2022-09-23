@@ -4,7 +4,7 @@ const { doc, setDoc, onSnapshot, collection } = firestore;
 
 const colName = "t7s-resume";
 
-type Data = StreamTweet & { checkTime: number; status: "active" | "inactive" };
+type Data = StreamTweet; //& { checkTime: number; status: "active" | "inactive" };
 
 const data: {
   [key: string]: Data;
@@ -26,11 +26,11 @@ const data: {
 const _unsubscribe = onSnapshot(collection(db, colName), (snapshot) => {
   snapshot.docChanges().forEach((change) => {
     if (change.type === "added" || change.type === "modified") {
-      const tweet = change.doc.data() as Data;
-      if (tweet.checkTime === undefined) {
-        tweet.checkTime = 0;
-        tweet.status = "active";
-      }
+      // const tweet = change.doc.data() as Data;
+      // if (tweet.checkTime === undefined) {
+      //   tweet.checkTime = 0;
+      //   tweet.status = "active";
+      // }
       data[change.doc.id] = change.doc.data() as Data;
       // console.log("New data: ", change.doc.data());
     }
@@ -43,8 +43,8 @@ const _unsubscribe = onSnapshot(collection(db, colName), (snapshot) => {
 
 export const setResumeTweet = async (tweet: StreamTweet) => {
   const tweetId = tweet.data.id;
-  const data = { ...tweet, checkTime: Date.now(), status: "active" };
-  await setDoc(doc(db, colName, tweetId), data);
+  // const data = { ...tweet, checkTime: Date.now(), status: "active" };
+  await setDoc(doc(db, colName, tweetId), tweet);
 };
 
 export const getData = () => data;

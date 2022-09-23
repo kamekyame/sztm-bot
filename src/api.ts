@@ -3,6 +3,7 @@ import { reqEnv } from "./env.ts";
 import { logger, responseTypeHeader } from "./api/middleware.ts";
 
 import { majiUranai } from "./api/maji-uranai.ts";
+import { t7sResume } from "./api/t7s-resume.ts";
 
 const router = new Router();
 router.get("/version", (ctx) => {
@@ -10,6 +11,7 @@ router.get("/version", (ctx) => {
   ctx.response.body = reqEnv.HEROKU_RELEASE_VERSION;
 });
 router.use("/maji-uranai", majiUranai.routes(), majiUranai.allowedMethods());
+router.use("/t7s-resume", t7sResume.routes(), t7sResume.allowedMethods());
 
 // Oak application
 const app = new Application();
@@ -35,3 +37,7 @@ export const api = () => {
   });
   return ac;
 };
+
+if (import.meta.main) {
+  api();
+}

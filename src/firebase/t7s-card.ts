@@ -68,7 +68,7 @@ export const getUserRef = (playerId: string) => {
 
 // データ変換用関数
 async function checkData() {
-  const q = query(collection(db, TweetColName), orderBy("cardId"), limit(500));
+  const q = query(collection(db, TweetColName), orderBy("cardId"), limit(1000));
   const snapshot = await getDocs(q);
   console.log("checkData", snapshot.size, snapshot.empty);
 

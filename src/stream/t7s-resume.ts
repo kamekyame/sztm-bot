@@ -16,9 +16,11 @@ export class T7sResume implements IStream {
 
   private readonly tag = "t7sResumeBOT";
   private readonly value = () =>
-    `has:images -is:retweet -is:quote (${this.searchTexts
-      .map((e) => `(${e})`)
-      .join(" OR ")})`;
+    `has:images -is:retweet -is:quote (${
+      this.searchTexts
+        .map((e) => `(${e})`)
+        .join(" OR ")
+    })`;
   public readonly option: StreamParam = {
     expansions: {
       author_id: true,

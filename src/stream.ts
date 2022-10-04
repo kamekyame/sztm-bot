@@ -42,11 +42,11 @@ async function checkRule() {
 
   let rules = await getRules(bearerToken);
   const addRules = needRules.filter(
-    (needRule) => !rules.data?.some((rule) => rule.value === needRule.value)
+    (needRule) => !rules.data?.some((rule) => rule.value === needRule.value),
   );
   const delRules = (rules.data || []).filter((rule) => {
     return needRules.some(
-      (needRule) => needRule.tag === rule.tag && needRule.value !== rule.value
+      (needRule) => needRule.tag === rule.tag && needRule.value !== rule.value,
     );
   });
   console.log({ addRules, delRules });
@@ -100,7 +100,7 @@ export const stream = () => {
         }
       }
     },
-    option
+    option,
   );
 };
 

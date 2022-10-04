@@ -8,5 +8,10 @@
     "files": {
       "include": ["src/"]
     }
+  },
+  "lint":{
+    "files": {
+      "include": ["src/"]
+    }
   }
 }

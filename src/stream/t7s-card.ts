@@ -7,7 +7,7 @@ import { c } from "../../sample/t7s-card_sample.js";
 export class T7sCard implements IStream {
   private readonly tag = "t7s-cardBOT";
   private readonly value = () =>
-    `has:images -is:retweet -is:quote 【Tokyo 7th シスターズ】`;
+    `has:images -is:retweet -is:quote 【Tokyo 7th シスターズ】 -クリア`;
 
   public readonly option = {
     expansions: { author_id: true, "attachments.media_keys": true },

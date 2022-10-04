@@ -41,7 +41,7 @@ export const getCardRef = async (data: CardData) => {
     collection(db, CardColName),
     where("rare", "==", data.rare),
     where("charactor", "==", data.charactor),
-    where("name", "==", data.name)
+    where("name", "==", data.name),
   );
   const querySnapshot = await getDocs(q);
 

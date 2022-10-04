@@ -1,8 +1,8 @@
 import {
-  initializeApp,
-  getAuth,
-  signInWithEmailAndPassword,
   firestore,
+  getAuth,
+  initializeApp,
+  signInWithEmailAndPassword,
 } from "./deps.ts";
 import { reqEnv } from "./env.ts";
 

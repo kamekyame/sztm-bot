@@ -102,7 +102,7 @@ export class Janken implements IStream {
       });
 
       console.log(
-        `[stream] @${user.username} とじゃんけん\t${logText}\ttweetId:${tweetRes.id}`
+        `[stream] @${user.username} とじゃんけん\t${logText}\ttweetId:${tweetRes.id}`,
       );
 
       if (count > 10) break;

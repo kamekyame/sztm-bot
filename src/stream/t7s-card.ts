@@ -1,13 +1,18 @@
-import { StreamTweet } from "../deps.ts";
+import { firestore, StreamTweet } from "../deps.ts";
 import { type IStream } from "../stream.ts";
-import { setCard, setTweet, setUser } from "../firebase/t7s-card.ts";
+import {
+  getCardRef,
+  getUserRef,
+  setTweet,
+  setUser,
+} from "../firebase/t7s-card.ts";
 
 import { c } from "../../sample/t7s-card_sample.js";
 
 export class T7sCard implements IStream {
   private readonly tag = "t7s-cardBOT";
   private readonly value = () =>
-    `has:images -is:retweet -is:quote 【Tokyo 7th シスターズ】`;
+    `has:images -is:retweet -is:quote 【Tokyo 7th シスターズ】 -クリア`;
 
   public readonly option = {
     expansions: { author_id: true, "attachments.media_keys": true },
@@ -42,7 +47,7 @@ export class T7sCard implements IStream {
     const tweetId = res.data.id;
 
     const match = res.data.text.match(
-      /【Tokyo 7th シスターズ】(.+?)レアカード　(.+?)(?:　| )(.+?) GETしたよ.+【プレイヤーID】(\w+)/
+      /【Tokyo 7th シスターズ】(.+?)レアカード　(.+?)(?:　| )(.+?) GETしたよ.+【プレイヤーID】(\w+)/,
     );
     // console.log(res, match);
     if (match === null) {
@@ -65,21 +70,21 @@ export class T7sCard implements IStream {
     const createdAt = res.data.created_at;
     if (!createdAt) throw new Error("createdAt is null");
 
-    const cardId = await setCard({
+    const cardRef = await getCardRef({
       rare,
       charactor,
       name,
       url: imageUrl,
     });
-    await setTweet(tweetId, {
-      playerId,
-      cardId,
-      date: createdAt,
-    });
     await setUser(playerId, user);
+    await setTweet(tweetId, {
+      playerRef: getUserRef(playerId),
+      cardRef,
+      date: firestore.Timestamp.fromDate(new Date(createdAt)),
+    });
 
     console.log(
-      `[stream] t7s-card[${playerId}]: ${rare} ${charactor} ${name}\ttweetId:${tweetId}`
+      `[stream] t7s-card[${playerId}]: ${rare} ${charactor} ${name}\ttweetId:${tweetId}`,
     );
   }
 }

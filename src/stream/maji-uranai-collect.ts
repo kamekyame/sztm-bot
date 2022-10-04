@@ -1,4 +1,4 @@
-import { StreamParam, StreamTweet, statusUpdate, datetime } from "../deps.ts";
+import { datetime, statusUpdate, StreamParam, StreamTweet } from "../deps.ts";
 import { auth } from "../twitter_util.ts";
 import { type IStream } from "../stream.ts";
 import {

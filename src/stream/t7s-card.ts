@@ -1,6 +1,11 @@
-import { StreamTweet } from "../deps.ts";
+import { StreamTweet, firestore } from "../deps.ts";
 import { type IStream } from "../stream.ts";
-import { setCard, setTweet, setUser } from "../firebase/t7s-card.ts";
+import {
+  getCardRef,
+  setTweet,
+  setUser,
+  getUserRef,
+} from "../firebase/t7s-card.ts";
 
 import { c } from "../../sample/t7s-card_sample.js";
 
@@ -65,18 +70,18 @@ export class T7sCard implements IStream {
     const createdAt = res.data.created_at;
     if (!createdAt) throw new Error("createdAt is null");
 
-    const cardId = await setCard({
+    const cardRef = await getCardRef({
       rare,
       charactor,
       name,
       url: imageUrl,
     });
-    await setTweet(tweetId, {
-      playerId,
-      cardId,
-      date: createdAt,
-    });
     await setUser(playerId, user);
+    await setTweet(tweetId, {
+      playerRef: getUserRef(playerId),
+      cardRef,
+      date: firestore.Timestamp.fromDate(new Date(createdAt)),
+    });
 
     console.log(
       `[stream] t7s-card[${playerId}]: ${rare} ${charactor} ${name}\ttweetId:${tweetId}`

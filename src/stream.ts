@@ -103,3 +103,7 @@ export const stream = () => {
     option
   );
 };
+
+if (import.meta.main) {
+  stream();
+}

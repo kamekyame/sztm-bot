@@ -1,15 +1,17 @@
 import { firestore } from "../deps.ts";
 import { db } from "../firebase.ts";
-const { doc, setDoc, collection, onSnapshot, addDoc } = firestore;
+const { doc, setDoc, collection, addDoc, query, where, getDocs } = firestore;
 
 const TweetColName = "t7s-card-tweets";
 const CardColName = "t7s-card-cards";
 const UserColName = "t7s-carf-users";
 
 type TweetData = {
-  playerId: string;
-  cardId: string;
-  date: string;
+  playerId?: string;
+  playerRef?: firestore.DocumentReference;
+  cardId?: string;
+  cardRef?: firestore.DocumentReference;
+  date: string | firestore.Timestamp;
 };
 type CardData = {
   rare: string;
@@ -23,42 +25,23 @@ type UserData = {
   username: string;
 };
 
-const cardData = new Map<string, CardData>();
+/** レア度、キャラ名、カード名でカードを検索しリファレンスを返す。（無ければ新規登録）*/
+export const getCardRef = async (data: CardData) => {
+  const q = query(
+    collection(db, CardColName),
+    where("rare", "==", data.rare),
+    where("charactor", "==", data.charactor),
+    where("name", "==", data.name)
+  );
+  const querySnapshot = await getDocs(q);
 
-const _unsubscribe = onSnapshot(collection(db, CardColName), (snapshot) => {
-  snapshot.docChanges().forEach((change) => {
-    if (change.type === "added" || change.type === "modified") {
-      cardData.set(change.doc.id, change.doc.data() as CardData);
-      // console.log("New data: ", change.doc.data());
-    }
-    if (change.type === "removed") {
-      cardData.delete(change.doc.id);
-      // console.log("Removed data: ", change.doc.data());
-    }
-  });
-});
-
-export const setCard = async (data: CardData) => {
-  let cardId: string | undefined;
-
-  for (const [id, card] of cardData) {
-    // console.log(id, card);
-    if (
-      card.rare === data.rare &&
-      card.charactor === data.charactor &&
-      card.name === data.name
-    ) {
-      cardId = id;
-      break;
-    }
-  }
-  if (cardId) {
-    await setDoc(doc(db, CardColName, cardId), data);
-  } else {
+  if (querySnapshot.empty) {
+    // 既存データがない場合、新規登録
     const docRef = await addDoc(collection(db, CardColName), data);
-    cardId = docRef.id;
+    return docRef;
+  } else {
+    return querySnapshot.docs[0].ref;
   }
-  return cardId;
 };
 
 export const setTweet = async (tweetId: string, data: TweetData) => {
@@ -67,4 +50,8 @@ export const setTweet = async (tweetId: string, data: TweetData) => {
 
 export const setUser = async (playerId: string, data: UserData) => {
   await setDoc(doc(db, UserColName, playerId), data, { merge: true });
+};
+
+export const getUserRef = (playerId: string) => {
+  return doc(db, UserColName, playerId);
 };

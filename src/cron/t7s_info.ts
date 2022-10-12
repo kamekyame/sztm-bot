@@ -1,17 +1,17 @@
-import { statusUpdate } from "../deps.ts";
-import { getDayDiff, translateDate } from "../util.ts";
+import { ptera, statusUpdate } from "../deps.ts";
+import { getDayDiff, tzTokyo } from "../util.ts";
 import { auth } from "../twitter_util.ts";
 
-const t7sBirth = translateDate(new Date("2014-02-19T00:00:00+09:00"));
+const t7sBirth = ptera.datetime("2014-02-19T00:00:00+09:00").toZonedTime(
+  tzTokyo,
+);
 
 export async function t7sInfoTweet() {
-  const nowDate = translateDate(new Date());
-  // const nowDate = translateDate(new Date("2022-02-19T00:00:00+09:00"));
-  nowDate.setHours(0, 0, 0, 0);
+  const nowDate = ptera.datetime().toZonedTime(tzTokyo);
   const diffFromBirth = getDayDiff(t7sBirth, nowDate);
-  const nextAnivDate = getNextAnivDate(nowDate);
+  const nextAnivDate = getNextAnivDate();
   const diffFromNextAniv = getDayDiff(nowDate, nextAnivDate);
-  const aniv = nextAnivDate.getUTCFullYear() - t7sBirth.getUTCFullYear();
+  const aniv = nextAnivDate.year - t7sBirth.year;
 
   let status = "";
   if (diffFromNextAniv === 0) {
@@ -19,7 +19,7 @@ export async function t7sInfoTweet() {
     status += `\nおめでとうございます！🎊🎊🎊🎊\n`;
   } else {
     const diffStr = ("    " + diffFromNextAniv).slice(-4);
-    console.log(diffStr);
+    // console.log(diffStr);
     status += `ナナシス🍣${aniv}周年まで\n`;
     status += `＿人人人人人人人＿\n`;
     status += `＞ あと${diffStr} 日！ ＜\n`;
@@ -28,20 +28,28 @@ export async function t7sInfoTweet() {
 
   status += `\nナナシスは今日で${diffFromBirth}日目\n`;
   status += `\n#ナナシス\n#t7s`;
-  console.log(status);
+  // console.log(status);
 
   const res = await statusUpdate(auth, { status });
-  console.log(res);
+  // console.log(res);
+  const tweetId = res?.id_str;
+  console.log(
+    `[cron/t7s_info] Tweeted t7s Anniversary Info: https://twitter.com/_/status/${tweetId}`,
+  );
 }
 
-function getNextAnivDate(nowDate: Date) {
-  const nowYear = nowDate.getUTCFullYear();
-  const nextAnivDate = new Date(t7sBirth);
-  nextAnivDate.setUTCFullYear(nowYear);
-  const diff = getDayDiff(nowDate, nextAnivDate);
-  // 次の周年日がマイナスの場合、既に経過しているので、次の周年日を設定する
-  diff < 0 && nextAnivDate.setUTCFullYear(nowYear + 1);
+function getNextAnivDate() {
+  const nowYear = ptera.datetime().toZonedTime(tzTokyo).year; //.getUTCFullYear();
+  let nextAnivDate = ptera.datetime().parse(
+    nowYear + "/" + t7sBirth.format("MM/dd"),
+    "YYYY/MM/dd",
+  ).toZonedTime(tzTokyo); // new Date(t7sBirth);
+  if (nextAnivDate.isBefore()) { // 次の周年日がマイナスの場合、既に経過しているので、次の周年日を設定する
+    nextAnivDate = nextAnivDate.add({ year: 1 });
+  }
   return nextAnivDate;
 }
 
-if (import.meta.main) t7sInfoTweet();
+if (import.meta.main) {
+  t7sInfoTweet();
+}

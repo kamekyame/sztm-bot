@@ -1,26 +1,14 @@
 import { firestore } from "../deps.ts";
 import { db } from "../firebase.ts";
-const {
-  doc,
-  setDoc,
-  collection,
-  addDoc,
-  query,
-  where,
-  getDocs,
-  limit,
-  orderBy,
-} = firestore;
+const { doc, setDoc, collection, addDoc, query, where, getDocs } = firestore;
 
 const TweetColName = "t7s-card-tweets";
 const CardColName = "t7s-card-cards";
 const UserColName = "t7s-carf-users";
 
 type TweetData = {
-  playerId?: string;
-  playerRef?: firestore.DocumentReference;
-  cardId?: string;
-  cardRef?: firestore.DocumentReference;
+  playerRef: firestore.DocumentReference;
+  cardRef: firestore.DocumentReference;
   date: string | firestore.Timestamp;
 };
 type CardData = {
@@ -65,37 +53,3 @@ export const setUser = async (playerId: string, data: UserData) => {
 export const getUserRef = (playerId: string) => {
   return doc(db, UserColName, playerId);
 };
-
-// データ変換用関数
-async function checkData() {
-  const q = query(collection(db, TweetColName), orderBy("cardId"), limit(500));
-  const snapshot = await getDocs(q);
-  console.log("checkData", snapshot.size, snapshot.empty);
-
-  for await (const d of snapshot.docs) {
-    const data = d.data() as TweetData;
-    const playerId = data.playerId;
-    const cardId = data.cardId;
-    const date = data.date;
-    if (
-      playerId === undefined ||
-      cardId === undefined ||
-      typeof date !== "string"
-    ) {
-      continue;
-    }
-    const newData: TweetData = {
-      playerRef: getUserRef(playerId),
-      cardRef: doc(db, CardColName, cardId),
-      date: firestore.Timestamp.fromDate(new Date(date)),
-    };
-    // console.log("chenge Data", data, newData);
-
-    await setDoc(doc(db, TweetColName, d.id), newData);
-    // console.log(doc.id, doc.data());
-  }
-}
-
-// checkData();
-// 1時間おきに実行
-setInterval(checkData, 1000 * 60 * 60);

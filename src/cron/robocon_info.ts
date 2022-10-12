@@ -1,5 +1,5 @@
-import { statusUpdate } from "../deps.ts";
-import { getDayDiff, translateDate } from "../util.ts";
+import { ptera, statusUpdate } from "../deps.ts";
+import { getDayDiff, tzTokyo } from "./../util.ts";
 import { auth } from "../twitter_util.ts";
 
 import roboconInfo from "../../data/robocon_info.json" assert { type: "json" };
@@ -20,21 +20,26 @@ const keyToName: Record<string, string> = {
 
 export async function roboconInfoTweet() {
   const { name, date } = roboconInfo[YEAR];
-  const nowDate = translateDate(new Date());
+  const nowDate = ptera.datetime().toZonedTime(tzTokyo);
 
   let status = `ロボコン${YEAR}「${name}」\n\n`;
   Object.entries(date).forEach(([key, value]) => {
     const tournamentName = keyToName[key];
     if (tournamentName === "全国") status += "\n";
-    const diff = getDayDiff(nowDate, new Date(value));
+    const tournamentDate = ptera.datetime(value).toZonedTime(tzTokyo);
+    const diff = getDayDiff(nowDate, tournamentDate);
     status += `${tournamentName}大会まで ${diff}日\n`;
   });
 
   status += "\n#ロボコン";
-  //console.log(status);
+  // console.log(status);
 
   const res = await statusUpdate(auth, { status });
-  console.log(res);
+  // console.log(res);
+  const tweetId = res?.id_str;
+  console.log(
+    `[cron/robocon_info] Tweeted Robocon Info: https://twitter.com/_/status/${tweetId}`,
+  );
 }
 
 if (import.meta.main) roboconInfoTweet();

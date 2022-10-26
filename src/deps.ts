@@ -1,6 +1,6 @@
 // Standard Library
 export { parse as yamlParse } from "https://deno.land/std@0.159.0/encoding/yaml.ts";
-export * as Colors from "https://deno.land/std@0.159.0/fmt/colors.ts";
+export * as Colors from "https://deno.land/std@0.160.0/fmt/colors.ts";
 export * as datetime from "https://deno.land/std@0.160.0/datetime/mod.ts";
 
 // Third Party Modules

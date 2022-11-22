@@ -1,7 +1,5 @@
 import { Colors, config, yamlParse } from "./deps.ts";
 
-const resolve = (path: string) => new URL(path, import.meta.url);
-
 type Config = Record<string, {
   require: boolean;
   default?: string;
@@ -14,7 +12,7 @@ const envConfig = yamlParse(getConfigStr()) as Config;
 //console.log(envConfig);
 function getConfigStr() {
   try {
-    return Deno.readTextFileSync(resolve("../envconfig.yml"));
+    return Deno.readTextFileSync("../envconfig.yml");
   } catch (_) {
     throw Error("There is no envconfig.yml");
   }
@@ -45,31 +43,4 @@ Object.entries(envConfig).forEach(([key, { require, default: def }]) => {
   }
 });
 
-// Deno.envを使った時にエラーを吐くようにする
-const oldEnvGet = Deno.env.get;
-const oldEnvSet = Deno.env.set;
-const oldEnvToObject = Deno.env.toObject;
-const oldEnvDelete = Deno.env.delete;
-const deprecatedConsoleLog = (funcName: string) =>
-  console.warn(
-    Colors.red(`${funcName} is deprecated. Use 'v1/parts/env.ts' instead.`),
-  );
-Deno.env.get = (key) => {
-  deprecatedConsoleLog("Deno.env.get");
-  return oldEnvGet(key);
-};
-Deno.env.set = (key, value) => {
-  deprecatedConsoleLog("Deno.env.set");
-  return oldEnvSet(key, value);
-};
-Deno.env.delete = (key) => {
-  deprecatedConsoleLog("Deno.env.delete");
-  return oldEnvDelete(key);
-};
-Deno.env.toObject = () => {
-  deprecatedConsoleLog("Deno.env.toObject");
-  return oldEnvToObject();
-};
-
-//console.log(reqEnv, nonReqEnv);
 console.log(Colors.green("[env]\tChecked environment"));

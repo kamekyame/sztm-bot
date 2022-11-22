@@ -12,7 +12,7 @@ const envConfig = yamlParse(getConfigStr()) as Config;
 //console.log(envConfig);
 function getConfigStr() {
   try {
-    return Deno.readTextFileSync("../envconfig.yml");
+    return Deno.readTextFileSync("./envconfig.yml");
   } catch (_) {
     throw Error("There is no envconfig.yml");
   }

@@ -6,7 +6,7 @@ export * as datetime from "https://deno.land/std@0.160.0/datetime/mod.ts";
 // Third Party Modules
 export * from "https://deno.land/x/dotenv@v3.2.0/mod.ts";
 export * from "https://deno.land/x/oak@v11.1.0/mod.ts";
-export * from "https://deno.land/x/twitter_api_client@v0.3.1/mod.ts";
+export * from "https://deno.land/x/twitter_api_client@v0.3.2/mod.ts";
 export { oakCors } from "https://deno.land/x/cors@v1.2.2/mod.ts";
 export * as ptera from "https://deno.land/x/ptera@v1.0.2/mod.ts";
 

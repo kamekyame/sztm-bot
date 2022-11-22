@@ -1,5 +1,5 @@
 // start cron job
-// import "./cron.ts";
+import "./cron.ts";
 
 // start twitter stream
 // import { stream } from "./stream.ts";

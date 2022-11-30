@@ -1,4 +1,5 @@
-import { datetime, statusUpdate, StreamParam, StreamTweet } from "../deps.ts";
+import { ptera, statusUpdate, StreamParam, StreamTweet } from "../deps.ts";
+import { tzTokyo } from "../util.ts";
 import { auth } from "../twitter_util.ts";
 import { type IStream } from "../stream.ts";
 import {
@@ -58,7 +59,8 @@ export class MajiUranaiCollect implements IStream {
 
     const createdAt = res.data.created_at;
     if (!createdAt) throw new Error("Nothing created_at");
-    const date = datetime.format(new Date(createdAt), "yyyy-MM-dd");
+    const date = ptera.datetime(createdAt).toZonedTime(tzTokyo)
+      .format("YYYY-MM-dd");
     if (!date) throw new Error("Nothing date");
 
     const text = res.data.text;

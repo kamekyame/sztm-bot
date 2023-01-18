@@ -1,4 +1,4 @@
-FROM denoland/deno:alpine-1.25.3
+FROM denoland/deno:alpine-1.29.4
 
 WORKDIR /home/sztm
 COPY . .

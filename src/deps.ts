@@ -14,3 +14,5 @@ export * from "https://cdn.jsdelivr.net/gh/hexagon/croner@4/src/croner.js";
 export * as app from "https://esm.sh/firebase@9.14.0/app";
 export * as auth from "https://esm.sh/firebase@9.14.0/auth";
 export * as firestore from "https://esm.sh/firebase@9.14.0/firestore";
+
+export { TwitterApi } from "npm:twitter-api-v2@1.14.0";

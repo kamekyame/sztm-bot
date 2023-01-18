@@ -1,10 +1,48 @@
-import { ptera, statusUpdate } from "../deps.ts";
+import { ptera, TwitterApi } from "../deps.ts";
 import { getDayDiff, tzTokyo } from "../util.ts";
 import { auth } from "../twitter_util.ts";
+
+const twitterClient = new TwitterApi({
+  appKey: auth.consumerKey,
+  appSecret: auth.consumerSecret,
+  accessToken: auth.token,
+  accessSecret: auth.tokenSecret,
+});
 
 const t7sBirth = ptera.datetime("2014-02-19T00:00:00+09:00").toZonedTime(
   tzTokyo,
 );
+
+/** counter用の画像をPortfolioからダウンロードし、一時ファイルに保存しTwitterにアップロード */
+const uploadImage = async (
+  { aniv, diffAniv, count }: { aniv: number; diffAniv: number; count: number },
+) => {
+  let url: URL;
+  const base = "https://kamekyame.com";
+  if (diffAniv === 0) {
+    url = new URL("/api/t7s/counter/aniv-image", base);
+  } else {
+    url = new URL("/api/t7s/counter/image", base);
+  }
+  url.searchParams.set("aniv", aniv.toString());
+  url.searchParams.set("diff-aniv", diffAniv.toString());
+  url.searchParams.set("count", count.toString());
+
+  const res = await fetch(url);
+  const mimeType = res.headers.get("content-type") ?? "";
+  const blob = await res.blob();
+
+  const tempFilePath = await Deno.makeTempFile();
+  console.log("tempFilePath", tempFilePath);
+  const buf = await blob.arrayBuffer();
+  await Deno.writeFile(tempFilePath, new Uint8Array(buf));
+
+  const media = await twitterClient.v1.uploadMedia(tempFilePath, { mimeType });
+
+  Deno.remove(tempFilePath);
+
+  return media;
+};
 
 export async function t7sInfoTweet() {
   const nowDate = ptera.datetime().toZonedTime(tzTokyo);
@@ -13,26 +51,21 @@ export async function t7sInfoTweet() {
   const diffFromNextAniv = getDayDiff(nowDate, nextAnivDate);
   const aniv = nextAnivDate.year - t7sBirth.year;
 
+  const mediaId = await uploadImage({
+    aniv: aniv,
+    diffAniv: diffFromNextAniv,
+    count: diffFromBirth,
+  });
+
   let status = "";
   if (diffFromNextAniv === 0) {
     status += `今日はナナシス${aniv}周年記念日！\n`;
     status += `\nおめでとうございます！🎊🎊🎊🎊\n`;
-  } else {
-    const diffStr = ("    " + diffFromNextAniv).slice(-4);
-    // console.log(diffStr);
-    status += `ナナシス🍣${aniv}周年まで\n`;
-    status += `＿人人人人人人人＿\n`;
-    status += `＞ あと${diffStr} 日！ ＜\n`;
-    status += `￣Y^Y^Y^Y^Y^Y^Y￣\n`;
   }
-
-  status += `\nナナシスは今日で${diffFromBirth}日目\n`;
   status += `\n#ナナシス\n#t7s`;
   // console.log(status);
-
-  const res = await statusUpdate(auth, { status });
-  // console.log(res);
-  const tweetId = res?.id_str;
+  const res = await twitterClient.v1.tweet(status, { media_ids: mediaId });
+  const tweetId = res.id_str;
   console.log(
     `[cron/t7s_info] Tweeted t7s Anniversary Info: https://twitter.com/_/status/${tweetId}`,
   );

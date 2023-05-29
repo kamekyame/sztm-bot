@@ -1,13 +1,6 @@
-import { ptera, TwitterApi } from "../deps.ts";
+import { ptera } from "../deps.ts";
 import { getDayDiff, tzTokyo } from "../util.ts";
-import { auth } from "../twitter_util.ts";
-
-const twitterClient = new TwitterApi({
-  appKey: auth.consumerKey,
-  appSecret: auth.consumerSecret,
-  accessToken: auth.token,
-  accessSecret: auth.tokenSecret,
-});
+import { twitterClient } from "../twitter_util.ts";
 
 const t7sBirth = ptera.datetime("2014-02-19T00:00:00+09:00").toZonedTime(
   tzTokyo,
@@ -64,8 +57,10 @@ export async function t7sInfoTweet() {
   }
   status += `\n#ナナシス\n#t7s`;
   // console.log(status);
-  const res = await twitterClient.v1.tweet(status, { media_ids: mediaId });
-  const tweetId = res.id_str;
+  const res = await twitterClient.v2.tweet(status, {
+    media: { media_ids: [mediaId] },
+  });
+  const tweetId = res.data.id;
   console.log(
     `[cron/t7s_info] Tweeted t7s Anniversary Info: https://twitter.com/_/status/${tweetId}`,
   );

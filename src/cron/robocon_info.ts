@@ -1,6 +1,6 @@
-import { ptera, statusUpdate } from "../deps.ts";
+import { ptera } from "../deps.ts";
 import { getDayDiff, tzTokyo } from "./../util.ts";
-import { auth } from "../twitter_util.ts";
+import { twitterClient } from "../twitter_util.ts";
 
 import roboconInfo from "../../data/robocon_info.json" assert { type: "json" };
 
@@ -40,7 +40,7 @@ export async function roboconInfoTweet() {
   status += "\n#ロボコン";
   // console.log(status);
 
-  const res = await statusUpdate(auth, { status });
+  const res = await twitterClient.v2.tweet(status);
   if (res.errors) {
     console.error("[cron/robocon_info] Tweet failed.");
     console.error(res.errors);
@@ -48,7 +48,7 @@ export async function roboconInfoTweet() {
     return;
   }
   // console.log(res);
-  const tweetId = res?.id_str;
+  const tweetId = res.data.id;
   console.log(
     `[cron/robocon_info] Tweeted Robocon Info: https://twitter.com/_/status/${tweetId}`,
   );

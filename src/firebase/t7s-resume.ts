@@ -4,6 +4,7 @@ const { doc, setDoc, onSnapshot, collection } = firestore;
 
 const colName = "t7s-resume";
 
+// deno-lint-ignore no-explicit-any
 type Data = any; // StreamTweet; //& { checkTime: number; status: "active" | "inactive" };
 
 const data: {
@@ -41,6 +42,7 @@ const _unsubscribe = onSnapshot(collection(db, colName), (snapshot) => {
   });
 });
 
+// deno-lint-ignore no-explicit-any
 export const setResumeTweet = async (tweet: any /* StreamTweet */) => {
   const tweetId = tweet.data.id;
   // const data = { ...tweet, checkTime: Date.now(), status: "active" };

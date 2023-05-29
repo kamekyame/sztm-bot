@@ -1,10 +1,11 @@
-import { firestore, StreamTweet } from "../deps.ts";
+import { firestore } from "../deps.ts";
 import { db } from "../firebase.ts";
 const { doc, setDoc, onSnapshot, collection } = firestore;
 
 const colName = "t7s-resume";
 
-type Data = StreamTweet; //& { checkTime: number; status: "active" | "inactive" };
+// deno-lint-ignore no-explicit-any
+type Data = any; // StreamTweet; //& { checkTime: number; status: "active" | "inactive" };
 
 const data: {
   [key: string]: Data;
@@ -41,7 +42,8 @@ const _unsubscribe = onSnapshot(collection(db, colName), (snapshot) => {
   });
 });
 
-export const setResumeTweet = async (tweet: StreamTweet) => {
+// deno-lint-ignore no-explicit-any
+export const setResumeTweet = async (tweet: any /* StreamTweet */) => {
   const tweetId = tweet.data.id;
   // const data = { ...tweet, checkTime: Date.now(), status: "active" };
   await setDoc(doc(db, colName, tweetId), tweet);

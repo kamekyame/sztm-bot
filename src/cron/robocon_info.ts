@@ -4,7 +4,7 @@ import { twitterClient } from "../twitter_util.ts";
 
 import roboconInfo from "../../data/robocon_info.json" assert { type: "json" };
 
-const YEAR = "2022";
+const YEAR = "2023";
 
 const keyToName: Record<string, string> = {
   hokkaido: "北海道",

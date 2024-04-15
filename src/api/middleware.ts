@@ -1,4 +1,4 @@
-import { Middleware } from "../deps.ts";
+import { Middleware } from "oak";
 
 export const logger: Middleware = async (ctx, next) => {
   await next();

@@ -1,4 +1,4 @@
-import { TwitterApi } from "./deps.ts";
+import { TwitterApi } from "twitter-api-v2";
 import { reqEnv } from "./env.ts";
 
 export const twitterClient = new TwitterApi({

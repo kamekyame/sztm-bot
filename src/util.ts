@@ -1,4 +1,5 @@
-import { Cron, ptera } from "./deps.ts";
+import * as ptera from "ptera";
+import { Cron } from "./deps.ts";
 
 export const tzTokyo = "Asia/Tokyo";
 

@@ -1,7 +1,8 @@
-import { Application, oakCors, Router, Status } from "./deps.ts";
+import { Application, Router, Status } from "oak";
+import { oakCors } from "cors";
+
 import { reqEnv } from "./env.ts";
 import { logger, responseTypeHeader } from "./api/middleware.ts";
-
 import { majiUranai } from "./api/maji-uranai.ts";
 import { t7sResume } from "./api/t7s-resume.ts";
 

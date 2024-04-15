@@ -1,14 +1,14 @@
-import { Colors, load, yamlParse } from "./deps.ts";
+import { parse } from "@std/yaml/mod.ts";
+import { load } from "@std/dotenv/mod.ts";
+import * as Colors from "@std/fmt/colors.ts";
 
 type Config = Record<string, {
   require: boolean;
   default?: string;
 }>;
 
-console.log(Colors.yellow("[env]\tCheck environment"));
-
 // Read config file
-const envConfig = yamlParse(getConfigStr()) as Config;
+const envConfig = parse(getConfigStr()) as Config;
 //console.log(envConfig);
 function getConfigStr() {
   try {

@@ -1,4 +1,4 @@
-import { ptera } from "../deps.ts";
+import * as ptera from "ptera";
 import { getDayDiff, tzTokyo } from "../util.ts";
 import { twitterClient } from "../twitter_util.ts";
 

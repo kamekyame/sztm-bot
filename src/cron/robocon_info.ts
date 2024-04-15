@@ -2,7 +2,7 @@ import * as ptera from "ptera";
 import { getDayDiff, tzTokyo } from "./../util.ts";
 import { twitterClient } from "../twitter_util.ts";
 
-import roboconInfo from "../../data/robocon_info.json" assert { type: "json" };
+import roboconInfo from "../../data/robocon_info.json" with { type: "json" };
 
 const YEAR = "2023";
 

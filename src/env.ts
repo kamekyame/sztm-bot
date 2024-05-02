@@ -1,5 +1,4 @@
 import { parse } from "@std/yaml/mod.ts";
-import { load } from "@std/dotenv/mod.ts";
 import * as Colors from "@std/fmt/colors.ts";
 
 type Config = Record<string, {
@@ -17,11 +16,6 @@ function getConfigStr() {
     throw Error("There is no envconfig.yml");
   }
 }
-
-// Read dotenv file
-await load({
-  export: true,
-});
 
 // Check env
 export const reqEnv: Record<string, string> = {};

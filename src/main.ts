@@ -11,10 +11,12 @@ const acs: AbortController[] = [];
 // const disconnectStream = stream();
 acs.push(api());
 
-Deno.addSignalListener("SIGTERM", () => {
-  // disconnectStream();
-  for (const ac of acs) {
-    ac.abort();
-  }
-  console.log("[main] SIGTERM received.");
-});
+if (Deno.build.os !== "windows") {
+  Deno.addSignalListener("SIGTERM", () => {
+    // disconnectStream();
+    for (const ac of acs) {
+      ac.abort();
+    }
+    console.log("[main] SIGTERM received.");
+  });
+}

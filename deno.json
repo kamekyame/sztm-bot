@@ -2,7 +2,7 @@
   "tasks": {
     "cache": "deno cache --allow-import src/main.ts",
     "check": "deno check src/main.ts",
-    "run": "deno run -A --unstable-cron --env src/main.ts",
+    "run": "deno run -A --unstable-cron --env-file=.env src/main.ts",
     "update": "deno run -A https://deno.land/x/udd/main.ts **/*.ts"
   },
   "imports": {

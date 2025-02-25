@@ -1,3 +1,4 @@
+import { Buffer } from "node:buffer";
 import * as ptera from "ptera";
 import { getDayDiff, tzTokyo } from "../util.ts";
 import { twitterClient } from "../twitter_util.ts";
@@ -6,7 +7,7 @@ const t7sBirth = ptera.datetime("2014-02-19T00:00:00+09:00").toZonedTime(
   tzTokyo,
 );
 
-/** counter用の画像をPortfolioからダウンロードし、一時ファイルに保存しTwitterにアップロード */
+/** counter用の画像をPortfolioからダウンロードし、Twitterにアップロード */
 const uploadImage = async (
   { aniv, diffAniv, count }: { aniv: number; diffAniv: number; count: number },
 ) => {
@@ -25,14 +26,10 @@ const uploadImage = async (
   const mimeType = res.headers.get("content-type") ?? "";
   const blob = await res.blob();
 
-  const tempFilePath = await Deno.makeTempFile();
-  console.log("tempFilePath", tempFilePath);
   const buf = await blob.arrayBuffer();
-  await Deno.writeFile(tempFilePath, new Uint8Array(buf));
+  const nodeBuf = Buffer.from(buf);
 
-  const media = await twitterClient.v1.uploadMedia(tempFilePath, { mimeType });
-
-  Deno.remove(tempFilePath);
+  const media = await twitterClient.v1.uploadMedia(nodeBuf, { mimeType });
 
   return media;
 };

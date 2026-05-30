@@ -5,18 +5,6 @@ import "./cron.ts";
 // import { stream } from "./stream.ts";
 
 // start API server
-import { api } from "./api.ts";
+import { app } from "./api.ts";
 
-const acs: AbortController[] = [];
-// const disconnectStream = stream();
-acs.push(api());
-
-if (Deno.build.os !== "windows") {
-  Deno.addSignalListener("SIGTERM", () => {
-    // disconnectStream();
-    for (const ac of acs) {
-      ac.abort();
-    }
-    console.log("[main] SIGTERM received.");
-  });
-}
+export default { fetch: app.fetch };

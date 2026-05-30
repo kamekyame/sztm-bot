@@ -6,7 +6,8 @@
     "update": "deno run -A https://deno.land/x/udd/main.ts **/*.ts"
   },
   "imports": {
-    "@std/": "https://deno.land/std@0.222.1/",
+    "@std/fmt": "jsr:@std/fmt@^1.0.10",
+    "@std/yaml": "jsr:@std/yaml@^1.1.1",
     "oak": "https://deno.land/x/oak@14.2.0/mod.ts",
     "cors": "https://deno.land/x/cors@v1.2.2/mod.ts",
     "ptera": "https://deno.land/x/ptera@v1.0.2/mod.ts",

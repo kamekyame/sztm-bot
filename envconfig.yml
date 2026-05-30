@@ -18,6 +18,7 @@ FIREBASE_EMAIL:
 FIREBASE_PASSWORD:
   require: true
 
-# dyno metadata()
-HEROKU_RELEASE_VERSION:
-  require: true
+# deno metadata()
+DENO_DEPLOYMENT_ID:
+  require: false
+  default: "unknown"

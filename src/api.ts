@@ -9,7 +9,7 @@ import { t7sResume } from "./api/t7s-resume.ts";
 const router = new Router();
 router.get("/version", (ctx) => {
   ctx.response.status = Status.OK;
-  ctx.response.body = reqEnv.HEROKU_RELEASE_VERSION;
+  ctx.response.body = reqEnv.DENO_DEPLOYMENT_ID;
 });
 router.use("/maji-uranai", majiUranai.routes(), majiUranai.allowedMethods());
 router.use("/t7s-resume", t7sResume.routes(), t7sResume.allowedMethods());

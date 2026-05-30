@@ -1,5 +1,5 @@
-import { Application, Router, Status } from "oak";
-import { oakCors } from "cors";
+import { Application, Router, Status } from "@oak/oak";
+import { oakCors } from "@tajpouria/cors";
 
 import { reqEnv } from "./env.ts";
 import { logger, responseTypeHeader } from "./api/middleware.ts";

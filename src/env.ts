@@ -1,5 +1,5 @@
-import { parse } from "@std/yaml/mod.ts";
-import * as Colors from "@std/fmt/colors.ts";
+import { parse } from "@std/yaml";
+import { green } from "@std/fmt/colors";
 
 type Config = Record<string, {
   require: boolean;
@@ -35,4 +35,4 @@ Object.entries(envConfig).forEach(([key, { require, default: def }]) => {
   }
 });
 
-console.log(Colors.green("[env]\tChecked environment"));
+console.log(green("[env]\tChecked environment"));

@@ -1,4 +1,4 @@
-import { Middleware } from "oak";
+import { Middleware } from "@oak/oak";
 
 export const logger: Middleware = async (ctx, next) => {
   await next();

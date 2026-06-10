@@ -2,13 +2,14 @@
   "tasks": {
     "cache": "deno cache --allow-import src/main.ts",
     "check": "deno check src/main.ts",
-    "run": "deno run -A --unstable-cron --env-file=.env src/main.ts",
+    "run": "deno serve -A --unstable-cron --env-file=.env src/main.ts",
     "update": "deno run -A https://deno.land/x/udd/main.ts **/*.ts"
   },
   "imports": {
-    "@std/": "https://deno.land/std@0.222.1/",
-    "oak": "https://deno.land/x/oak@14.2.0/mod.ts",
-    "cors": "https://deno.land/x/cors@v1.2.2/mod.ts",
+    "@oak/oak": "jsr:@oak/oak@17.2.0",
+    "@std/fmt": "jsr:@std/fmt@^1.0.10",
+    "@std/yaml": "jsr:@std/yaml@^1.1.1",
+    "@tajpouria/cors": "jsr:@tajpouria/cors@^1.2.1",
     "ptera": "https://deno.land/x/ptera@v1.0.2/mod.ts",
     "twitter-api-v2": "npm:twitter-api-v2@1.14.3"
   },

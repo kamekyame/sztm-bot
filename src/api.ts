@@ -15,7 +15,7 @@ router.use("/maji-uranai", majiUranai.routes(), majiUranai.allowedMethods());
 router.use("/t7s-resume", t7sResume.routes(), t7sResume.allowedMethods());
 
 // Oak application
-const app = new Application();
+export const app = new Application();
 
 app.use(logger);
 app.use(responseTypeHeader);
@@ -26,19 +26,3 @@ app.use((ctx) => {
   ctx.response.status = Status.NotFound;
   ctx.response.body = { message: "Not Found" };
 });
-// Read Arguments
-const port = parseInt(reqEnv.PORT);
-
-export const api = () => {
-  const ac = new AbortController();
-  console.log(`Listen to http://localhost:${port}/`);
-  app.listen({ port, signal: ac.signal }).finally(() => {
-    console.error("[api] Stopped API server.");
-    // Deno.exit(1);
-  });
-  return ac;
-};
-
-if (import.meta.main) {
-  api();
-}

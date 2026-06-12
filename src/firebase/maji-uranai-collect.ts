@@ -1,6 +1,5 @@
-import { firestore } from "../deps.ts";
+import { collection, doc, onSnapshot, setDoc } from "firebase/firestore";
 import { db } from "../firebase.ts";
-const { doc, setDoc, collection, onSnapshot } = firestore;
 
 const colName = "maji-uranai";
 
@@ -25,10 +24,10 @@ const _unsubscribe = onSnapshot(collection(db, colName), (snapshot) => {
 });
 
 export const setLuckyColor = async (date: string, data: Data["color"]) => {
-  await setDoc<Data>(doc(db, colName, date), { color: data }, { merge: true });
+  await setDoc(doc(db, colName, date), { color: data }, { merge: true });
 };
 export const setLuckyZodiac = async (date: string, data: Data["zodiac"]) => {
-  await setDoc<Data>(doc(db, colName, date), { zodiac: data }, { merge: true });
+  await setDoc(doc(db, colName, date), { zodiac: data }, { merge: true });
 };
 
 export const getData = () => data;

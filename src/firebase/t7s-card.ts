@@ -1,15 +1,24 @@
-import { firestore } from "../deps.ts";
+import {
+  addDoc,
+  collection,
+  doc,
+  type DocumentReference,
+  getDocs,
+  query,
+  setDoc,
+  type Timestamp,
+  where,
+} from "firebase/firestore";
 import { db } from "../firebase.ts";
-const { doc, setDoc, collection, addDoc, query, where, getDocs } = firestore;
 
 const TweetColName = "t7s-card-tweets";
 const CardColName = "t7s-card-cards";
 const UserColName = "t7s-carf-users";
 
 type TweetData = {
-  playerRef: firestore.DocumentReference;
-  cardRef: firestore.DocumentReference;
-  date: string | firestore.Timestamp;
+  playerRef: DocumentReference;
+  cardRef: DocumentReference;
+  date: string | Timestamp;
 };
 type CardData = {
   rare: string;

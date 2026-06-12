@@ -1,6 +1,5 @@
-import { firestore } from "../deps.ts";
+import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase.ts";
-const { doc, updateDoc, getDoc, setDoc } = firestore;
 
 const colName = "janken";
 

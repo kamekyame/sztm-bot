@@ -1,4 +1,6 @@
-import { app, auth, firestore } from "./deps.ts";
+import { initializeApp } from "firebase/app";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 import { reqEnv } from "./env.ts";
 
 const { FIREBASE_EMAIL: email, FIREBASE_PASSWORD: password } = reqEnv;
@@ -14,11 +16,11 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-app.initializeApp(firebaseConfig);
+initializeApp(firebaseConfig);
 
 // Login
-const a = auth.getAuth();
-await auth.signInWithEmailAndPassword(a, email, password);
+const a = getAuth();
+await signInWithEmailAndPassword(a, email, password);
 console.log("[firebase] Login Successed");
 
-export const db = firestore.getFirestore();
+export const db = getFirestore();

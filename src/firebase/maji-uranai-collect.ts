@@ -1,6 +1,5 @@
-import { firestore } from "../deps.ts";
+import { collection, doc, onSnapshot, setDoc } from "firebase/firestore";
 import { db } from "../firebase.ts";
-const { doc, setDoc, collection, onSnapshot } = firestore;
 
 const colName = "maji-uranai";
 

@@ -17,7 +17,7 @@
     "jsr:@tajpouria/cors@^1.2.1": "1.2.1",
     "npm:firebase@^12.15.0": "12.15.0",
     "npm:path-to-regexp@^6.3.0": "6.3.0",
-    "npm:twitter-api-v2@1.14.3": "1.14.3"
+    "npm:twitter-api-v2@1.29.0": "1.29.0"
   },
   "jsr": {
     "@oak/commons@1.0.1": {
@@ -648,8 +648,8 @@
     "tslib@2.8.1": {
       "integrity": "sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w=="
     },
-    "twitter-api-v2@1.14.3": {
-      "integrity": "sha512-NJeEwlgZ+DKBRky2kLzomeXK0zLQ2dRFY4OxQ2U8gtun8sl5nNM6PTH/AcZyaXoBKlnOWPsOzYMwwjohv/ZFhw=="
+    "twitter-api-v2@1.29.0": {
+      "integrity": "sha512-v473q5bwme4N+DWSg6qY+JCvfg1nSJRWwui3HUALafxfqCvVkKiYmS/5x/pVeJwTmyeBxexMbzHwnzrH4h6oYQ=="
     },
     "undici-types@7.24.6": {
       "integrity": "sha512-WRNW+sJgj5OBN4/0JpHFqtqzhpbnV0GuB+OozA9gCL7a993SmU+1JBZCzLNxYsbMfIeDL+lTsphD5jN5N+n0zg=="
@@ -717,7 +717,7 @@
       "jsr:@std/yaml@^1.1.1",
       "jsr:@tajpouria/cors@^1.2.1",
       "npm:firebase@^12.15.0",
-      "npm:twitter-api-v2@1.14.3"
+      "npm:twitter-api-v2@1.29.0"
     ]
   }
 }

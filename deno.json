@@ -12,7 +12,7 @@
     "@tajpouria/cors": "jsr:@tajpouria/cors@^1.2.1",
     "firebase": "npm:firebase@^12.15.0",
     "ptera": "https://deno.land/x/ptera@v1.0.2/mod.ts",
-    "twitter-api-v2": "npm:twitter-api-v2@1.14.3"
+    "twitter-api-v2": "npm:twitter-api-v2@1.29.0"
   },
   "fmt": {
     "include": ["src/"]

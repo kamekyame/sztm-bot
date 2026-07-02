@@ -13,7 +13,7 @@
     "jsr:@std/internal@^1.0.14": "1.0.14",
     "jsr:@std/media-types@1": "1.1.0",
     "jsr:@std/path@1": "1.1.5",
-    "jsr:@std/yaml@^1.1.1": "1.1.1",
+    "jsr:@std/yaml@^1.1.2": "1.1.2",
     "jsr:@tajpouria/cors@^1.2.1": "1.2.1",
     "npm:firebase@^12.15.0": "12.15.0",
     "npm:path-to-regexp@^6.3.0": "6.3.0",
@@ -76,8 +76,8 @@
         "jsr:@std/internal"
       ]
     },
-    "@std/yaml@1.1.1": {
-      "integrity": "a57665ecf3d17b926380593a56625d8a10cc7281802f1e993b5ebc94a48e71f8"
+    "@std/yaml@1.1.2": {
+      "integrity": "de612653c036749ba2044165e316f52412b0f0698afffb7ee80b5331d6d2abae"
     },
     "@tajpouria/cors@1.2.1": {
       "integrity": "eca42e4fb7cb3906ef0ee3d1e565dd6bb4632ccd8e70a95cf4279759743328f0"
@@ -714,7 +714,7 @@
     "dependencies": [
       "jsr:@oak/oak@17.2.0",
       "jsr:@std/fmt@^1.0.10",
-      "jsr:@std/yaml@^1.1.1",
+      "jsr:@std/yaml@^1.1.2",
       "jsr:@tajpouria/cors@^1.2.1",
       "npm:firebase@^12.15.0",
       "npm:twitter-api-v2@1.29.0"

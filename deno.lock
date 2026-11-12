@@ -2,7 +2,7 @@
   "version": "5",
   "specifiers": {
     "jsr:@oak/commons@1": "1.0.2",
-    "jsr:@oak/oak@17.2.1": "17.2.1",
+    "jsr:@oak/oak@17.2.2": "17.2.2",
     "jsr:@std/assert@1": "1.0.19",
     "jsr:@std/bytes@1": "1.0.6",
     "jsr:@std/crypto@1": "1.1.0",
@@ -31,8 +31,8 @@
         "jsr:@std/media-types"
       ]
     },
-    "@oak/oak@17.2.1": {
-      "integrity": "5f22e7051f77a21ca832f12d66d47ff83712a3b9a42b50dd564d9d0730ee151a",
+    "@oak/oak@17.2.2": {
+      "integrity": "e302b67753b8dca51da9d9c9244036cd95a1852ffa1c3dda857818b6e3066553",
       "dependencies": [
         "jsr:@oak/commons",
         "jsr:@std/assert",
@@ -728,7 +728,7 @@
   },
   "workspace": {
     "dependencies": [
-      "jsr:@oak/oak@17.2.1",
+      "jsr:@oak/oak@17.2.2",
       "jsr:@std/fmt@^1.0.10",
       "jsr:@std/yaml@^1.2.0",
       "jsr:@tajpouria/cors@^1.2.1",

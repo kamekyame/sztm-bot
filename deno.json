@@ -6,7 +6,7 @@
     "update": "deno run -A https://deno.land/x/udd/main.ts **/*.ts"
   },
   "imports": {
-    "@oak/oak": "jsr:@oak/oak@17.2.1",
+    "@oak/oak": "jsr:@oak/oak@17.2.2",
     "@std/fmt": "jsr:@std/fmt@^1.0.10",
     "@std/yaml": "jsr:@std/yaml@^1.2.0",
     "@tajpouria/cors": "jsr:@tajpouria/cors@^1.2.1",
